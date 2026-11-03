@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GrabIt - Food delivery, dining out and nightlife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F5F1; --surface:#FFFFFF; --ink:#1E2321; --muted:#6B736E; --line:#E1E4DC;
+  --forest:#2F4A3A; --pista:#C6E0A6; --mist:#DCE6E4; --sand:#EDE8DA; --blush:#EFDDD6;
+  --display:'Bricolage Grotesque','Trebuchet MS',sans-serif; --body:'Figtree','Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.5}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+:focus-visible{outline:2px solid var(--forest);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+/* nav */
+header{position:sticky;top:0;z-index:10;background:rgba(244,245,241,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;gap:20px;height:68px}
+.logo{font-family:var(--display);font-weight:800;font-size:26px;letter-spacing:-.03em;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:8px}
+.logo i{width:14px;height:14px;border-radius:50%;background:var(--pista);border:2px solid var(--forest);display:inline-block}
+.loc{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:14px}
+.loc input{border:0;outline:0;width:110px;background:none}
+.sp{flex:1}
+.ghost{padding:8px 14px;border-radius:999px;font-weight:500;font-size:15px}
+.ghost:hover{background:var(--mist)}
+.solid{background:var(--forest);color:#fff;padding:9px 18px;border-radius:999px;font-weight:600;font-size:15px}
+.solid:hover{background:#243a2d}
+.bag{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:15px;font-weight:500}
+.bag b{background:var(--pista);border-radius:999px;padding:1px 8px;margin-left:6px;font-size:13px}
+
+/* hero */
+.hero{padding:72px 0 40px}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(40px,7vw,76px);line-height:1;letter-spacing:-.04em;max-width:11em}
+.hero p{color:var(--muted);font-size:18px;margin:20px 0 32px;max-width:32em}
+.search{display:flex;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 8px 8px 24px;max-width:620px;box-shadow:0 8px 30px rgba(30,35,33,.05)}
+.search input{flex:1;border:0;outline:0;background:none;font-size:17px;min-width:0}
+
+/* tabs and chips */
+.tabs{display:flex;gap:32px;border-bottom:1px solid var(--line);margin-top:48px}
+.tab{padding:14px 0;font-size:17px;font-weight:500;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab[aria-selected=true]{color:var(--ink);border-color:var(--forest)}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0 8px}
+.chip{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:14px;font-weight:500;transition:background .15s}
+.chip:hover{background:var(--mist)}
+.chip[aria-pressed=true]{background:var(--forest);color:#fff;border-color:var(--forest)}
+
+/* sections */
+section{padding:32px 0}
+h2{font-family:var(--display);font-size:28px;letter-spacing:-.02em;margin-bottom:20px}
+.cuis{display:flex;gap:22px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
+.cu{flex:none;text-align:center;width:84px}
+.cu span{display:grid;place-items:center;width:84px;height:84px;border-radius:50%;background:var(--surface);border:1px solid var(--line);font-size:34px;transition:.15s}
+.cu:hover span{background:var(--mist)}
+.cu[aria-pressed=true] span{background:var(--pista);border-color:var(--forest)}
+.cu small{display:block;margin-top:8px;font-size:14px;font-weight:500}
+
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:24px}
+.card{background:var(--surface);border-radius:20px;overflow:hidden;border:1px solid var(--line);display:flex;flex-direction:column}
+.pic{height:150px;display:grid;place-items:center;font-size:58px;position:relative}
+.off{position:absolute;left:12px;bottom:12px;background:var(--surface);border-radius:999px;padding:3px 10px;font-size:13px;font-weight:600}
+.eta{position:absolute;right:12px;top:12px;background:rgba(255,255,255,.85);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:600}
+.body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:4px;flex:1}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.body h3{font-family:var(--display);font-size:19px;letter-spacing:-.01em}
+.rate{background:var(--pista);border-radius:8px;padding:1px 8px;font-size:13px;font-weight:600}
+.meta{color:var(--muted);font-size:14px}
+.cui{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.add{margin-top:12px;border:1px solid var(--forest);color:var(--forest);border-radius:999px;padding:8px;font-weight:600;font-size:14px;transition:.15s}
+.add:hover,.add.on{background:var(--forest);color:#fff}
+.empty{grid-column:1/-1;text-align:center;padding:56px 0;color:var(--muted)}
+.empty button{margin-top:14px}
+
+/* stats and features */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;background:var(--forest);color:#fff;border-radius:28px;padding:48px}
+.stats b{display:block;font-family:var(--display);font-size:clamp(30px,4.5vw,48px);letter-spacing:-.03em}
+.stats span{color:var(--pista)}
+.feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.feat div{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;font-weight:500}
+.feat em{display:block;font-style:normal;font-size:28px;margin-bottom:8px}
+.gold{background:var(--sand);border-radius:28px;padding:40px 48px;display:flex;gap:32px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.gold h2{margin:0 0 6px}
+.gold p{color:var(--muted)}
+
+/* footer */
+footer{border-top:1px solid var(--line);margin-top:48px;padding:48px 0 32px;color:var(--muted);font-size:14px}
+.fcols{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:28px;margin-bottom:32px}
+.fcols h4{color:var(--ink);font-size:15px;margin-bottom:10px}
+.fcols a{display:block;color:inherit;text-decoration:none;padding:3px 0}
+.fcols a:hover{color:var(--forest)}
+
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:10px 20px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:.25s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media(max-width:720px){
+  .loc,.ghost{display:none}
+  .stats{grid-template-columns:1fr;padding:32px}
+  .gold{padding:28px}
+  .hero{padding-top:40px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="#top"><i></i>GrabIt</a>
+      <label class="loc">📍 <input id="city" value="Aurangabad" aria-label="Your location"></label>
+      <span class="sp"></span>
+      <button class="ghost" onclick="toast('Login is coming soon')">Log in</button>
+      <button class="solid" onclick="toast('Sign up is coming soon')">Sign up</button>
+      <button class="bag" onclick="toast(cart.size?cart.size+' item(s) in your order':'Your order is empty')">Order<b id="count">0</b></button>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap">
+    <div class="hero">
+      <h1>Good food, grabbed in minutes.</h1>
+      <p>Order in, book a table or find tonight's plan. GrabIt brings the best of your city to one quiet little page.</p>
+      <div class="search">
+        <input id="q" type="search" placeholder="Search for a restaurant, cuisine or dish" aria-label="Search">
+        <button class="solid" onclick="document.getElementById('list').scrollIntoView()">Find food</button>
+      </div>
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" data-m="d" aria-selected="true">Delivery</button>
+      <button class="tab" role="tab" data-m="o" aria-selected="false">Dining out</button>
+      <button class="tab" role="tab" data-m="n" aria-selected="false">Nightlife</button>
+    </div>
+    <div class="chips" id="chips">
+      <button class="chip" data-f="veg" aria-pressed="false">Pure veg</button>
+      <button class="chip" data-f="top" aria-pressed="false">Rating 4.5+</button>
+      <button class="chip" data-f="off" aria-pressed="false">Offers</button>
+      <button class="chip" data-f="open" aria-pressed="false">Open now</button>
+    </div>
+
+    <section>
+      <h2>What are you craving?</h2>
+      <div class="cuis" id="cuis"></div>
+    </section>
+
+    <section id="list">
+      <h2 id="title">Food delivery in Aurangabad</h2>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <section>
+      <div class="stats">
+        <div><b>3,00,000+</b><span>restaurants</span></div>
+        <div><b>800+</b><span>cities</span></div>
+        <div><b>3 billion+</b><span>orders delivered</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Made for how you eat</h2>
+      <div class="feat">
+        <div><em>🥦</em>Veg mode</div><div><em>🥗</em>Healthy</div><div><em>🗂️</em>Collections</div>
+        <div><em>⏰</em>Schedule your order</div><div><em>🎉</em>Plan a party</div><div><em>🏷️</em>Offers</div>
+        <div><em>🚆</em>Food on train</div><div><em>🎁</em>Gift cards</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="gold">
+        <div><h2>GrabIt Gold</h2><p>Free delivery within 7 km and up to 30% extra off at partner restaurants.</p></div>
+        <button class="solid" onclick="toast('Gold is coming soon')">Join Gold</button>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fcols">
+      <div><a class="logo" href="#top" style="color:var(--ink)"><i></i>GrabIt</a></div>
+      <div><h4>Popular cuisines</h4><a href="#list">Biryani near me</a><a href="#list">Pizza near me</a><a href="#list">Burger near me</a><a href="#list">Momos near me</a></div>
+      <div><h4>Restaurant types</h4><a href="#list">Cafés</a><a href="#list">Fine dining</a><a href="#list">Dhabas</a><a href="#list">Bars</a></div>
+      <div><h4>Cities we deliver to</h4><a href="#list">Mumbai</a><a href="#list">Pune</a><a href="#list">Nagpur</a><a href="#list">Nashik</a></div>
+      <div><h4>Company</h4><a href="#list">For restaurants</a><a href="#list">Delivery partners</a><a href="#list">Help and support</a><a href="#list">Privacy</a></div>
+    </div>
+    <p>By continuing, you agree to our Terms of Service and Privacy Policy. 2026 GrabIt. A college project.</p>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+// m: d = delivery, o = dining out, n = nightlife
+const R=[
+ {n:'Spice Route Kitchen',r:4.6,c:'North Indian, Biryani, Mughlai',p:250,a:'CIDCO',t:22,m:'do',v:0,off:'20% off',open:1,e:'🍛',k:0},
+ {n:'The Green Bowl',r:4.4,c:'Salads, Healthy, Thali',p:200,a:'Usmanpura',t:18,m:'d',v:1,off:'',open:1,e:'🥗',k:1},
+ {n:'Slice and Co.',r:4.1,c:'Pizza, Italian, Desserts',p:300,a:'Vedant Nagar',t:28,m:'do',v:1,off:'Flat 100 off',open:1,e:'🍕',k:2},
+ {n:'Momo Mania',r:4.2,c:'Momos, Chinese, Street food',p:150,a:'Nirala Bazar',t:20,m:'d',v:0,off:'30% off',open:1,e:'🥟',k:3},
+ {n:'Dosa Junction',r:4.5,c:'Dosa, South Indian, Coffee',p:180,a:'Mondha',t:15,m:'do',v:1,off:'',open:1,e:'🥞',k:0},
+ {n:'Burger Barn',r:3.9,c:'Burger, Fast food, Shakes',p:200,a:'Chikalthana',t:25,m:'d',v:0,off:'Flat 150 off',open:0,e:'🍔',k:1},
+ {n:'Rolls and Rolls',r:4.0,c:'Rolls, Kebab, North Indian',p:170,a:'Shahgunj',t:24,m:'d',v:0,off:'',open:1,e:'🌯',k:2},
+ {n:'Sweet Tooth Studio',r:4.7,c:'Desserts, Ice cream, Coffee',p:220,a:'CIDCO',t:17,m:'do',v:1,off:'10% off',open:1,e:'🍨',k:3},
+ {n:'Harbor Table',r:4.6,c:'Seafood, Continental, Asian',p:1400,a:'Mukundwadi',t:0,m:'o',v:0,off:'',open:1,e:'🦐',k:0},
+ {n:'Barrel and Bloom',r:4.4,c:'Bar food, Pizza, Finger food',p:1500,a:'Usmanpura',t:0,m:'n',v:0,off:'Flat 20% off',open:1,e:'🍸',k:1},
+ {n:'Lounge 21',r:4.1,c:'North Indian, Continental, Kebab',p:1800,a:'Mondha',t:0,m:'n',v:0,off:'',open:0,e:'🍹',k:2},
+ {n:'Terrace Thali House',r:4.5,c:'Thali, Maharashtrian, Desserts',p:600,a:'Nirala Bazar',t:0,m:'o',v:1,off:'Flat 10% off',open:1,e:'🍽️',k:3},
+ {n:'Midnight Biryani Co.',r:4.3,c:'Biryani, Kebab, Beverages',p:350,a:'Gadia Vihar',t:30,m:'dn',v:0,off:'',open:1,e:'🍲',k:1},
+ {n:'Cafe Quiet Hours',r:4.6,c:'Cafe, Coffee, Sandwich, Desserts',p:500,a:'Vedant Nagar',t:0,m:'o',v:1,off:'',open:1,e:'☕',k:0}
+];
+const CU=[['🍕','Pizza'],['🍛','Biryani'],['🍔','Burger'],['🌯','Rolls'],['🥟','Momos'],['🍱','Thali'],['🥞','Dosa'],['🍨','Desserts'],['☕','Coffee'],['🥗','Salads']];
+const tints=['var(--pista)','var(--mist)','var(--sand)','var(--blush)'];
+const names={d:'Food delivery',o:'Dining out',n:'Nightlife'};
+const st={m:'d',f:new Set(),cu:'',q:''};
+const cart=new Set();
+const $=id=>document.getElementById(id);
+
+function toast(t){const el=$('toast');el.textContent=t;el.classList.add('show');clearTimeout(toast.h);toast.h=setTimeout(()=>el.classList.remove('show'),1800)}
+
+function render(){
+  const city=$('city').value.trim()||'your city';
+  $('title').textContent=names[st.m]+' in '+city;
+  const q=st.q.toLowerCase();
+  const list=R.filter(x=>x.m.includes(st.m)
+    &&(!st.f.has('veg')||x.v)&&(!st.f.has('top')||x.r>=4.5)&&(!st.f.has('off')||x.off)&&(!st.f.has('open')||x.open)
+    &&(!st.cu||x.c.toLowerCase().includes(st.cu.toLowerCase()))
+    &&(!q||(x.n+' '+x.c).toLowerCase().includes(q)));
+  $('grid').innerHTML=list.length?list.map(x=>{
+    const i=R.indexOf(x), price=st.m==='d'?'₹'+x.p+' for one':'₹'+x.p.toLocaleString('en-IN')+' for two';
+    const eta=st.m==='d'&&x.t?'<span class="eta">'+x.t+' min</span>':'';
+    const btn=st.m==='d'?'<button class="add'+(cart.has(i)?' on':'')+'" data-i="'+i+'">'+(cart.has(i)?'Added':'Add to order')+'</button>'
+      :'<button class="add" data-b="'+i+'">Book a table</button>';
+    return '<article class="card"><div class="pic" style="background:'+tints[x.k]+'">'+x.e
+      +(x.off?'<span class="off">'+x.off+'</span>':'')+eta+'</div><div class="body">'
+      +'<div class="row"><h3>'+x.n+'</h3><span class="rate">'+x.r+'</span></div>'
+      +'<div class="cui">'+x.c+'</div><div class="meta">'+price+', '+x.a+'</div>'
+      +(x.open?'':'<div class="meta">Closed, opens tomorrow</div>')+btn+'</div></article>';
+  }).join(''):'<div class="empty"><p>Nothing matches those filters.</p><button class="solid" id="reset">Clear filters</button></div>';
+}
+
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  st.m=t.dataset.m;
+  document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',x===t));
+  render();
+});
+$('chips').onclick=e=>{
+  const b=e.target.closest('.chip');if(!b)return;
+  const f=b.dataset.f, on=b.getAttribute('aria-pressed')!=='true';
+  b.setAttribute('aria-pressed',on);on?st.f.add(f):st.f.delete(f);render();
+};
+$('cuis').innerHTML=CU.map(c=>'<button class="cu" aria-pressed="false" data-c="'+c[1]+'"><span>'+c[0]+'</span><small>'+c[1]+'</small></button>').join('');
+$('cuis').onclick=e=>{
+  const b=e.target.closest('.cu');if(!b)return;
+  const on=b.getAttribute('aria-pressed')!=='true';
+  document.querySelectorAll('.cu').forEach(x=>x.setAttribute('aria-pressed','false'));
+  b.setAttribute('aria-pressed',on);st.cu=on?b.dataset.c:'';render();
+};
+$('q').oninput=e=>{st.q=e.target.value;render()};
+$('city').oninput=render;
+$('grid').onclick=e=>{
+  if(e.target.id==='reset'){
+    st.f.clear();st.cu='';st.q='';$('q').value='';
+    document.querySelectorAll('.chip,.cu').forEach(x=>x.setAttribute('aria-pressed','false'));render();return;
+  }
+  const b=e.target.closest('.add');if(!b)return;
+  if(b.dataset.b!==undefined){toast('Table request sent to '+R[b.dataset.b].n);return}
+  const i=+b.dataset.i;cart.has(i)?cart.delete(i):cart.add(i);
+  $('count').textContent=cart.size;
+  toast(cart.has(i)?R[i].n+' added to your order':R[i].n+' removed');render();
+};
+render();
+</script>
+</body>
+</html>
